@@ -244,16 +244,9 @@ public class SQLDatabaseHelper {//extends SQLiteOpenHelper
     
     /**
      * getTableId	- возвращает индекс таблицы
-	 * TABLE_GENERATION_ID 		= 1;
-	 * TABLE_GENERATION_LANG_ID 	= 2;
-	 * TABLE_LANGUAGE_ID 			= 3;
-	 * TABLE_POP_BUTTONS_ID 		= 4;
-	 * TABLE_POP_BUTTONS_PRODUCT_ID= 5;
- 	 * TABLE_PRODUCT_ID 			= 6;
-	 * TABLE_PRODUCT_ACCESSORY_ID 	= 7;
-	 * TABLE_PRODUCT_LANG_ID 		= 8;
-	 * TABLE_PRODUCT_PARAMETER_ID 	= 9;
-	 * TABLE_PRODUCT_PRICE_ID 		= 10;
+	 * TABLE_SONG_FILE_ID 		= 1;
+	 * TABLE_TAG_ID 	= 2;
+	 * TABLE_SONG_FILE_TAG_ID 			= 3;
      * @param tableName (имя таблицы)
      * @return int value
      */
@@ -322,7 +315,7 @@ public class SQLDatabaseHelper {//extends SQLiteOpenHelper
     	database.execSQL("CREATE TABLE IF NOT EXISTS " + tableName + " " + field);
     }
     
-    public void deleteTables() {
+    public void deleteAllTables() {
     	//generations
     	Log.w(TAG, "drop a " + DBAppData.TABLE_SONG_FILE + " table");
     	database.execSQL("DROP TABLE IF EXISTS " + DBAppData.TABLE_SONG_FILE);

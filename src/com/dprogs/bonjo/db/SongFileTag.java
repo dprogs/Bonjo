@@ -1,5 +1,10 @@
 package com.dprogs.bonjo.db;
 
+/**
+ * Tag file's structure
+ * @author L
+ *
+ */
 public class SongFileTag {
 	
 	private int songFileId;

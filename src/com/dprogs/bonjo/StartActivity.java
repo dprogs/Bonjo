@@ -8,9 +8,10 @@ import com.dprogs.bonjo.db.SQLiteMyHelper;
 import com.dprogs.bonjo.db.SongFile;
 import com.dprogs.bonjo.db.SongFileTag;
 import com.dprogs.bonjo.db.Tag;
+import com.dprogs.bonjo.screens.Screen1;
+import com.dprogs.bonjo.screens.Screen2;
+import com.dprogs.bonjo.screens.Screen3;
 import com.dprogs.bonjo.utils.ALog;
-import com.example.DBHelper;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -25,9 +26,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 
-public class MainActivity extends Activity {
+public class StartActivity extends Activity {
 
 	private String TAG = ".Bonjo";
 	
@@ -35,7 +37,7 @@ public class MainActivity extends Activity {
 	
 	final String format1 = "%2d%17s%22s%18s%16s%16s";
 	final String format2 = "%2s%16s%22s%18s%16s%16s";
-	DBHelper db;
+	//DBHelper db;
 	SQLiteMyHelper myDb;
 
 	/**
@@ -215,8 +217,6 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    
-
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -229,9 +229,17 @@ public class MainActivity extends Activity {
 
         @Override
         public Fragment getItem(int position) {
+        	Log.e(TAG, "--------------------------------------- pos " + position);
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+        	
+        	switch (position) {
+	        	case 0: return new Screen1();
+	        	case 1: return new Screen2();
+	        	case 2: return new Screen3();
+        	}
+        	Log.e(TAG, "--------------------------------------- finish ");
+            return new Screen1();//PlaceholderFragment.newInstance(position + 1);
         }
 
         @Override
@@ -281,12 +289,12 @@ public class MainActivity extends Activity {
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-//            TextView tv = (TextView) rootView.findViewById(R.id.section_label);
-//            
-//            tv.setText(text);
+            TextView tv = (TextView) rootView.findViewById(R.id.section_label);
+
+            String label = String.valueOf(getArguments().getInt(ARG_SECTION_NUMBER, 0));
+            tv.setText(label);
             return rootView;
         }
     }

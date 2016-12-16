@@ -1,5 +1,10 @@
 package com.dprogs.bonjo.db;
 
+/**
+ * Song file's structure
+ * @author L
+ *
+ */
 public class SongFile {
 
 	private int id;				//0

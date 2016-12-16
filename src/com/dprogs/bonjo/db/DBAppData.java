@@ -15,15 +15,16 @@ public class DBAppData {
 		public static final String DB_NAME = "bonjo_sql.db";
 //		public static final String DB_SQL_DUMP_NAME = "full_dump.sql";
 //		public static final String ZIP_PRODUCT_NAME = "atn_products.zip";
-		public static final String pathContent = ".invc";//".pop";
+		public static final String pathContent = ".bonjo";//".pop";
 	    public static final String pathCatalog = pathContent + content_folder[0];
 		
-	    /* Table id */
+	    /* Table id's */
 		public static final int TABLE_SONG_FILE_ID 		= 1;
 		public static final int TABLE_TAG_ID 			= 2;
 		public static final int TABLE_SONG_FILE_TAG_ID 	= 3;
 		
 		public static final String TABLE_DELETED_PREFIX 	= "deleted_";
+		
 		/* Table names */
 		public static final String TABLE_SONG_FILE 			= "songfiles";
 		public static final String TABLE_TAG 				= "tags";
