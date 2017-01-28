@@ -2,6 +2,7 @@ package com.dprogs.bonjo.screens;
 
 import java.io.File;
 
+import com.dprogs.bonjo.MediaUtils;
 import com.dprogs.bonjo.R;
 import com.dprogs.bonjo.db.DBStorage;
 import com.dprogs.bonjo.db.SongFile;
@@ -27,6 +28,8 @@ public class Screen1 extends Fragment {
 	
 	View mView;
 	Button pickFileButton;
+	Button showSongsButton;
+	Button deleteDBButton;
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,6 +37,8 @@ public class Screen1 extends Fragment {
 		mView = inflater.inflate(R.layout.fragment_1, container, false);
 		
 		pickFileButton = (Button) mView.findViewById(R.id.pickFileButton);
+		showSongsButton = (Button) mView.findViewById(R.id.showSongsListButton);
+		deleteDBButton = (Button) mView.findViewById(R.id.clearTableButton);
 		
 		pickFileButton.setOnClickListener(new OnClickListener() {
 
@@ -74,9 +79,30 @@ public class Screen1 extends Fragment {
 			
 		});
 		
+		showSongsButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				DBStorage.readSongs();
+			}
+		});
+
+		deleteDBButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				DBStorage.getDatabase().dropAllTables();
+			}
+		});
+		
         return mView;
     }
 
+	public void prepareMedia(String path) {
+        DBStorage.getDatabase().addSong(MediaUtils.parseMP3(path));
+        DBStorage.readSongs();
+	}
+	
 	@Override
 	public synchronized void onActivityResult(int requestCode, int resultCode, Intent data) {
 //	    super.onActivityResult(requestCode, resultCode, data);
@@ -86,25 +112,18 @@ public class Screen1 extends Fragment {
 		if (resultCode == Activity.RESULT_OK) {
 
 	        String filePath = data.getStringExtra(FileDialog.RESULT_PATH);
+	        
+	        prepareMedia(filePath);
 
 	        if (requestCode == REQUEST_SAVE) {
 	            System.out.println("Saving... " + filePath);
 	            
-	            File f = new File(filePath);
-
-	            System.out.println("Song path: " + f.getParent());// /home/jigar/Desktop
-	            System.out.println("Song file: " + f.getName());  //1.txt
-	            
-	            DBStorage.getDatabase().addSong(new SongFile(f.getParent(), f.getName(), "Jazzy", "U2", "2017 forever"));
-	            DBStorage.readSongs();
 	            
 	        } else if (requestCode == REQUEST_LOAD) {
 	            System.out.println("Loading...");
 	        }
 
 	    } else if (resultCode == Activity.RESULT_CANCELED) {
-//	        Logger.getLogger(AccelerationChartRun.class.getName()).log(
-//	                Level.WARNING, "file not selected");
 	    	Log.w("", "File not selected");
 	    }		
 	}

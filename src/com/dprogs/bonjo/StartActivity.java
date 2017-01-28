@@ -63,7 +63,7 @@ public class StartActivity extends Activity {
 
         initViews();
         
-        DBStorage.initDatabase(this);
+        DBStorage.createDatabase(this);
         
 //        myDb = new SQLiteMyHelper(this, DBAppData.DB_NAME, null, 1);
 //        Log.e("2", "123");

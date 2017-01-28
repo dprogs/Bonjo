@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteException;
@@ -25,11 +26,26 @@ public class SQLiteMyHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
 		// music file table
+		createIfNotExistsSongs(db);
+		//tag table
+		createIfNotExistsTags(db);    	
+		//split table
+		createIfNotExistsSplit(db);
+	}
+
+	private void createIfNotExistsSongs(SQLiteDatabase db) {
+		// music file table
 	   	Log.w(TAG, "create a " + DBAppData.TABLE_SONG_FILE + " table for DB " + DBAppData.DB_NAME);
 	   	db.execSQL("CREATE TABLE IF NOT EXISTS " + DBAppData.TABLE_SONG_FILE + " " + DBAppData.TABLE_SONG_FILE_FIELDS);
-    	//tag table
+	}
+	
+	private void createIfNotExistsTags(SQLiteDatabase db) {
+		//tag table
     	Log.w(TAG, "create a " + DBAppData.TABLE_TAG + " table for DB " + DBAppData.DB_NAME);
     	db.execSQL("CREATE TABLE IF NOT EXISTS " + DBAppData.TABLE_TAG + " " + DBAppData.TABLE_TAG_FIELDS);
+	}
+
+	private void createIfNotExistsSplit(SQLiteDatabase db) {
     	//split table
     	Log.w(TAG, "create a " + DBAppData.TABLE_SONG_FILE_TAG + " table for DB " + DBAppData.DB_NAME);
     	db.execSQL("CREATE TABLE IF NOT EXISTS " + DBAppData.TABLE_SONG_FILE_TAG + " " + DBAppData.TABLE_SONG_FILE_TAG_FIELDS);
@@ -52,6 +68,11 @@ public class SQLiteMyHelper extends SQLiteOpenHelper {
 	 */
 	public void addSong(SongFile songFile) {
 	  SQLiteDatabase db = this.getWritableDatabase();
+	  
+	  if (!isTableExists(DBAppData.TABLE_SONG_FILE)) {
+		  Log.w(TAG, "The table not exists or was deleted! Create a new one");
+		  createIfNotExistsSongs(db);
+	  }
 	  ContentValues cv = new ContentValues();
 	  cv.put(SongFile.COLUMN_FOLDER, songFile.getDestFolder());
 	  cv.put(SongFile.COLUMN_FILENAME, songFile.getFileName());
@@ -113,15 +134,41 @@ public class SQLiteMyHelper extends SQLiteOpenHelper {
 //			  return db.delete(DBAppData.TABLE_SONG_FILE, SongFile.COLUMN_ID + "=" + songId, null);
 //		}
 
+    /**
+     * isTableExists - checks that defined table exists in current database
+     * @param db
+     * @param tableName
+     * @return
+     */
+	public boolean isTableExists(String table) {
+		//SELECT * FROM sqlite_master WHERE name ='myTable' and type='table'; 
+        Cursor cursor = this.getReadableDatabase().rawQuery("SELECT COUNT(*) FROM sqlite_master WHERE type = ? AND name = ?", new String[] {"table", table});
+        if (!cursor.moveToFirst()) {
+            return false;
+        }
+        
+        int count = cursor.getInt(0);
+        cursor.close();
+        return count > 0;
+	}
+	
 	/**
 	 * Get all songs list stored in database
 	 * @return
 	 */
 	public List<SongFile> getAllSongs() {
+		Cursor cursor;
 		List<SongFile> songList = new ArrayList<SongFile>();
 		String query = "SELECT * FROM " + DBAppData.TABLE_SONG_FILE;
 		SQLiteDatabase db = this.getReadableDatabase();
-		Cursor cursor = db.rawQuery(query, null);
+		try {
+			cursor = db.rawQuery(query, null);
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			Log.e(TAG, "The table probably doesn't exists!");
+			return null;
+		}
 		if(cursor.moveToFirst()) {
 			do {
 				SongFile songFile = new SongFile();
