@@ -259,7 +259,7 @@ public class OpenFileDialog extends AlertDialog.Builder {
             changeTitle();
         } catch (NullPointerException e) {
             String message = getContext().getResources().getString(android.R.string.unknownName);
-            if (!accessDeniedMessage.equals(""))
+            if (accessDeniedMessage != null && !accessDeniedMessage.equals(""))
                 message = accessDeniedMessage;
             Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
         }

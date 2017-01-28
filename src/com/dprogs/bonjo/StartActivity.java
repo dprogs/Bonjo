@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Locale;
 
 import com.dprogs.bonjo.db.DBAppData;
+import com.dprogs.bonjo.db.DBStorage;
 import com.dprogs.bonjo.db.SQLiteMyHelper;
 import com.dprogs.bonjo.db.SongFile;
 import com.dprogs.bonjo.db.SongFileTag;
@@ -38,7 +39,7 @@ public class StartActivity extends Activity {
 	final String format1 = "%2d%17s%22s%18s%16s%16s";
 	final String format2 = "%2s%16s%22s%18s%16s%16s";
 	//DBHelper db;
-	SQLiteMyHelper myDb;
+	//SQLiteMyHelper myDb;
 
 	/**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -62,22 +63,24 @@ public class StartActivity extends Activity {
 
         initViews();
         
-        myDb = new SQLiteMyHelper(this, DBAppData.DB_NAME, null, 1);
-        Log.e("2", "123");
-        myDb.onCreate(myDb.getWritableDatabase());
-        Log.e("2", "123");
+        DBStorage.initDatabase(this);
+        
+//        myDb = new SQLiteMyHelper(this, DBAppData.DB_NAME, null, 1);
+//        Log.e("2", "123");
+//        myDb.onCreate(myDb.getWritableDatabase());
+//        Log.e("2", "123");
         addSongs();
-        readSongs();
+        DBStorage.readSongs();
         Log.w("2", "#Delete song 11 from the table");
         deleteSongById(11);
 
-        readSongs();
+        DBStorage.readSongs();
 
-        myDb.TagSong(10, "home");
-        myDb.TagSong(10, "guitar");
-        myDb.TagSong(2, "night drive");
-        myDb.TagSong(2, "home");
-        myDb.TagSong(3, "rock");
+        DBStorage.getDatabase().TagSong(10, "home");
+        DBStorage.getDatabase().TagSong(10, "guitar");
+        DBStorage.getDatabase().TagSong(2, "night drive");
+        DBStorage.getDatabase().TagSong(2, "home");
+        DBStorage.getDatabase().TagSong(3, "rock");
         
         readTags();
         readTaggedSongs();
@@ -89,7 +92,7 @@ public class StartActivity extends Activity {
         
         showTagsBySongId(10);
         
-        deleteDB();
+        //deleteDB();
     }
 
     void initViews() {
@@ -121,34 +124,34 @@ public class StartActivity extends Activity {
     
     private void addSongs() {
     	ALog.i(TAG, "# Add songs");
-    	myDb.addSong(new SongFile("D:\\Music", "laura.mp3", "Acapello", "Laura Boji", "Memories 2003"));
-    	myDb.addSong(new SongFile("D:\\Music", "laura3.mp3", "Laluby", "Laura Boji", "Memories 2003"));
-    	myDb.addSong(new SongFile("D:\\Music", "laura11.mp3", "I'm in love", "Laura Boji", "Memories 2003"));
-    	myDb.addSong(new SongFile("D:\\Music", "laura14.mp3", "Waterfall", "Laura Boji", "Memories 2003"));
-    	myDb.addSong(new SongFile("D:\\Music", "laura07.mp3", "Adventure", "Laura Boji", "Greatest Hits"));
-    	myDb.addSong(new SongFile("D:\\Music\\New", "bon jovi.mp3", "It's my life", "John Bonjovi", "2000"));
-    	myDb.addSong(new SongFile("D:\\Music\\New", "tnmk - voda.mp3", "Вода", "Т.Н.М.К.", "Вода 2004"));
-    	myDb.addSong(new SongFile("D:\\Music\\New", "woc.mp3", "Wind of changes", "Scorpions", null));
-    	myDb.addSong(new SongFile("D:\\Music\\New", "tropicana.mp3", "Club tropicna", "George Michael", "Memories 2003"));
-    	myDb.addSong(new SongFile("D:\\Music\\New", "behind_blue_eyes.mp3", "Behind blue eyes", "Limp bizkit", ""));
-    	myDb.addSong(new SongFile("D:\\Music\\New", "shapeofmyheart.mp3", "Shape of my heart", "Sting", ""));
+    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music", "laura.mp3", "Acapello", "Laura Boji", "Memories 2003"));
+    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music", "laura3.mp3", "Laluby", "Laura Boji", "Memories 2003"));
+    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music", "laura11.mp3", "I'm in love", "Laura Boji", "Memories 2003"));
+    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music", "laura14.mp3", "Waterfall", "Laura Boji", "Memories 2003"));
+    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music", "laura07.mp3", "Adventure", "Laura Boji", "Greatest Hits"));
+    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music\\New", "bon jovi.mp3", "It's my life", "John Bonjovi", "2000"));
+    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music\\New", "tnmk - voda.mp3", "Вода", "Т.Н.М.К.", "Вода 2004"));
+    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music\\New", "woc.mp3", "Wind of changes", "Scorpions", null));
+    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music\\New", "tropicana.mp3", "Club tropicna", "George Michael", "Memories 2003"));
+    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music\\New", "behind_blue_eyes.mp3", "Behind blue eyes", "Limp bizkit", ""));
+    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music\\New", "shapeofmyheart.mp3", "Shape of my heart", "Sting", ""));
     }
    
-    private void readSongs() {
-    	ALog.w(TAG, "# Read songs table");
-    	
-        List<SongFile> songList = myDb.getAllSongs();
-        Log.w("MyTag", "[SONGS TABLE]");
-        Log.i("MyTag", String.format(format2, "ID", "FOLDER", "FILE", "SONG", "ARTIST", "ALBUM"));
-        for (SongFile sf : songList) {
-        	Log.i("MyTag", String.format(format1, sf.getId(), sf.getDestFolder(), sf.getFileName(), sf.getSong(), sf.getArtist(), sf.getAlbum()));
-        }
-    }
+//    private void readSongs() {
+//    	ALog.w(TAG, "# Read songs table");
+//    	
+//        List<SongFile> songList = DBStorage.getDatabase().getAllSongs();
+//        Log.w("MyTag", "[SONGS TABLE]");
+//        Log.i("MyTag", String.format(format2, "ID", "FOLDER", "FILE", "SONG", "ARTIST", "ALBUM"));
+//        for (SongFile sf : songList) {
+//        	Log.i("MyTag", String.format(format1, sf.getId(), sf.getDestFolder(), sf.getFileName(), sf.getSong(), sf.getArtist(), sf.getAlbum()));
+//        }
+//    }
     
     private void readTags() {
     	ALog.w(TAG, "# Read tags table");
     	
-        List<Tag> tagList = myDb.getAllTags();
+        List<Tag> tagList = DBStorage.getDatabase().getAllTags();
         Log.w("MyTag", "[TAGS TABLE]");
         Log.i("MyTag", String.format("%2s%20s", "ID", "TAG"));
         for (Tag t : tagList) {
@@ -159,7 +162,7 @@ public class StartActivity extends Activity {
     private void readTaggedSongs() {
     	ALog.w(TAG, "# Read tagged songs table");
     	
-        List<SongFileTag> taggedSongsList = myDb.getAllTaggedSongs();
+        List<SongFileTag> taggedSongsList = DBStorage.getDatabase().getAllTaggedSongs();
         Log.w("MyTag", "[SONGS&TAGS TABLE]");
         Log.i("MyTag", String.format("%8s%8s", "SONG ID", "TAG ID"));
         for (SongFileTag t : taggedSongsList) {
@@ -169,7 +172,7 @@ public class StartActivity extends Activity {
     
     private void showTagsBySongId(int songId) {
         //List<SongFileTag> taggedSongsList = myDb.getAllTaggedSongs();
-        List<Tag> tagList = myDb.getTagsBySongId(songId);
+        List<Tag> tagList = DBStorage.getDatabase().getTagsBySongId(songId);
         
         Log.i("MyTag", "[***********]");
         Log.w("MyTag", String.format("%8s%8s", "SONG ID", "#TAG"));
@@ -179,8 +182,8 @@ public class StartActivity extends Activity {
         }
 
     private void showPlaylistByTagId(int tagId) {
-        List<SongFile> tagPlaylist = myDb.getSongsByTagId(tagId);
-        Log.w("MyTag", "[PLAYLIST TAG #" + myDb.getTagById(tagId) +"]");
+        List<SongFile> tagPlaylist = DBStorage.getDatabase().getSongsByTagId(tagId);
+        Log.w("MyTag", "[PLAYLIST TAG #" + DBStorage.getDatabase().getTagById(tagId) +"]");
         Log.i("MyTag", String.format("%8s%8s", "SONG ID", "SONG NAME"));
         for (SongFile t : tagPlaylist) {
         	Log.i("MyTag", String.format("%6d%8s", t.getId(), t.getSong()));
@@ -189,12 +192,12 @@ public class StartActivity extends Activity {
     }
     private void deleteSongById(int id) {
     	ALog.w(TAG, "# Delete song " + id + " from table");
-        myDb.deleteSongFromTableById(id);
+        DBStorage.getDatabase().deleteSongFromTableById(id);
     }
     
     private void deleteDB() {
     	ALog.w(TAG, "# Delete all DB tables");
-        myDb.dropAllTables();
+        DBStorage.getDatabase().dropAllTables();
     }
 
 
