@@ -31,7 +31,7 @@ public class DBAppData {
 		public static final String TABLE_SONG_FILE_TAG		= "songfilestags";
 		
 		/* Tables structure */
-		public static final String TABLE_SONG_FILE_FIELDS 		= "(_id integer PRIMARY KEY AUTOINCREMENT,folder varchar,filename varchar,song varchar,artist varchar,album varchar)";
+		public static final String TABLE_SONG_FILE_FIELDS 		= "(_id integer PRIMARY KEY AUTOINCREMENT,folder varchar,filename varchar,song varchar,duration varchar,artist varchar,album varchar)";
 		public static final String TABLE_TAG_FIELDS 			= "(_id integer PRIMARY KEY AUTOINCREMENT,tag varchar unique)";
 		public static final String TABLE_SONG_FILE_TAG_FIELDS	= "(song_id integer,tag_id integer,PRIMARY KEY (song_id,tag_id))";
 

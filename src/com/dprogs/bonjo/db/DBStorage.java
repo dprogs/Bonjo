@@ -10,8 +10,8 @@ import android.util.Log;
 public class DBStorage {
 	private final static String TAG = "DBStorage";
 	
-	final static String format1 = "%2d%17s%22s%18s%16s%16s";
-	final static String format2 = "%2s%16s%22s%18s%16s%16s";
+	final static String format1 = "%2d%17s%22s%18s%6s%16s%15s";
+	final static String format2 = "%2s%16s%22s%18s%6s%16s%15s";
 
 	private static SQLiteMyHelper database;
 	
@@ -35,9 +35,9 @@ public class DBStorage {
         List<SongFile> songList = database.getAllSongs();
         if (songList != null) {
 	        Log.w("MyTag", "[SONGS TABLE]");
-	        Log.i("MyTag", String.format(format2, "ID", "FOLDER", "FILE", "SONG", "ARTIST", "ALBUM"));
+	        Log.i("MyTag", String.format(format2, "ID", "FOLDER", "FILE", "SONG", "TIME", "ARTIST", "ALBUM"));
 	        for (SongFile sf : songList) {
-	        	Log.i("MyTag", String.format(format1, sf.getId(), sf.getDestFolder(), sf.getFileName(), sf.getSong(), sf.getArtist(), sf.getAlbum()));
+	        	Log.i("MyTag", String.format(format1, sf.getId(), sf.getDestFolder(), sf.getFileName(), sf.getSong(), sf.getDuration(), sf.getArtist(), sf.getAlbum()));
 	        }
         }
     }

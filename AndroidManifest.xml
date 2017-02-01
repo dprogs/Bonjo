@@ -16,8 +16,6 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <!-- File dialog explorer library activity -->
-		<activity android:name="com.lamerman.FileDialog"/>
         
         <activity
             android:name=".StartActivity"
@@ -29,6 +27,8 @@
             </intent-filter>
         </activity>
         
-    </application>
+        <!-- File dialog explorer library activity -->
+		<activity android:name="com.lamerman.FileDialog"/>
+        </application>
 
 </manifest>

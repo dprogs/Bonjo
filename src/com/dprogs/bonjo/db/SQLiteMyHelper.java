@@ -77,6 +77,7 @@ public class SQLiteMyHelper extends SQLiteOpenHelper {
 	  cv.put(SongFile.COLUMN_FOLDER, songFile.getDestFolder());
 	  cv.put(SongFile.COLUMN_FILENAME, songFile.getFileName());
 	  cv.put(SongFile.COLUMN_SONG, songFile.getSong());
+	  cv.put(SongFile.COLUMN_DURATION, songFile.getDuration());
 	  cv.put(SongFile.COLUMN_ARTIST, songFile.getArtist());
 	  cv.put(SongFile.COLUMN_ALBUM, songFile.getAlbum());
 	  db.insert(DBAppData.TABLE_SONG_FILE, null, cv);
@@ -87,27 +88,27 @@ public class SQLiteMyHelper extends SQLiteOpenHelper {
 	 * Add a new song to table
 	 * @param songFile
 	 */
-	public void addSong2(SongFile songFile) {
-		//** ** an Example //http://www.w3schools.com/sql/sql_update.asp
-		//INSERT OR REPLACE INTO Employee ("id", "name", "role") VALUES (1, "John Foo", "CEO")
-		//INSERT OR REPLACE INTO Employee ("id", "role") VALUES (1, "code monkey")
-		String fields = "/" + SongFile.COLUMN_FOLDER + "/, " + 
-						"/" + SongFile.COLUMN_FILENAME + "/, " + 
-						"/" + SongFile.COLUMN_SONG + "/, " + 
-						"/" + SongFile.COLUMN_ARTIST + "/, " + 
-						"/" + SongFile.COLUMN_ALBUM + "/, ";
-		
-		String values = "/" + songFile.getDestFolder() + "/, " +
-						"/" + songFile.getFileName() + "/, " +
-						"/" + songFile.getSong() + "/, " +
-						"/" + songFile.getArtist() + "/, " +
-						"/" + songFile.getAlbum() + "/, ";
-		
-		String sql = "INSERT OR REPLACE INTO " + DBAppData.TABLE_SONG_FILE + " (" + fields + ") VALUES (" + values + ")";
-		SQLiteDatabase db = this.getWritableDatabase();
-		db.execSQL(sql);
-		db.close();
-	}
+//	public void addSong2(SongFile songFile) {
+//		//** ** an Example //http://www.w3schools.com/sql/sql_update.asp
+//		//INSERT OR REPLACE INTO Employee ("id", "name", "role") VALUES (1, "John Foo", "CEO")
+//		//INSERT OR REPLACE INTO Employee ("id", "role") VALUES (1, "code monkey")
+//		String fields = "/" + SongFile.COLUMN_FOLDER + "/, " + 
+//						"/" + SongFile.COLUMN_FILENAME + "/, " + 
+//						"/" + SongFile.COLUMN_SONG + "/, " + 
+//						"/" + SongFile.COLUMN_ARTIST + "/, " + 
+//						"/" + SongFile.COLUMN_ALBUM + "/, ";
+//		
+//		String values = "/" + songFile.getDestFolder() + "/, " +
+//						"/" + songFile.getFileName() + "/, " +
+//						"/" + songFile.getSong() + "/, " +
+//						"/" + songFile.getArtist() + "/, " +
+//						"/" + songFile.getAlbum() + "/, ";
+//		
+//		String sql = "INSERT OR REPLACE INTO " + DBAppData.TABLE_SONG_FILE + " (" + fields + ") VALUES (" + values + ")";
+//		SQLiteDatabase db = this.getWritableDatabase();
+//		db.execSQL(sql);
+//		db.close();
+//	}
 
 	/**
 	 * Delete a song from table
@@ -176,6 +177,7 @@ public class SQLiteMyHelper extends SQLiteOpenHelper {
 				songFile.setDestFolder((cursor.getString(SongFile.DEST_FOLDER_FIELD)));
 				songFile.setFileName(cursor.getString(SongFile.FILE_NAME_FIELD));
 				songFile.setSong(cursor.getString(SongFile.SONG_FIELD));
+				songFile.setDuration(cursor.getString(SongFile.DURATION));
 				songFile.setArtist(cursor.getString(SongFile.ARTIST_FIELD));
 				songFile.setAlbum(cursor.getString(SongFile.ALBUM_FIELD));
 				songList.add(songFile);
@@ -199,6 +201,7 @@ public class SQLiteMyHelper extends SQLiteOpenHelper {
 			songFile.setDestFolder(cursor.getString(SongFile.DEST_FOLDER_FIELD));
 			songFile.setFileName(cursor.getString(SongFile.FILE_NAME_FIELD));
 			songFile.setSong(cursor.getString(SongFile.SONG_FIELD));
+			songFile.setDuration(cursor.getString(SongFile.DURATION));
 			songFile.setArtist(cursor.getString(SongFile.ARTIST_FIELD));
 			songFile.setAlbum(cursor.getString(SongFile.ALBUM_FIELD));
 			//Log.i(TAG, "getSongById: #" + songFile.getSong() + " id:" + songId);

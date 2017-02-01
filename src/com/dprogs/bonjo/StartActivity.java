@@ -69,29 +69,31 @@ public class StartActivity extends Activity {
 //        Log.e("2", "123");
 //        myDb.onCreate(myDb.getWritableDatabase());
 //        Log.e("2", "123");
-        addSongs();
-        DBStorage.readSongs();
-        Log.w("2", "#Delete song 11 from the table");
-        deleteSongById(11);
-
-        DBStorage.readSongs();
-
-        DBStorage.getDatabase().TagSong(10, "home");
-        DBStorage.getDatabase().TagSong(10, "guitar");
-        DBStorage.getDatabase().TagSong(2, "night drive");
-        DBStorage.getDatabase().TagSong(2, "home");
-        DBStorage.getDatabase().TagSong(3, "rock");
-        
-        readTags();
-        readTaggedSongs();
-        
-//        Log.i("mi", "Song : " + myDb.getSongById(3).getSong());
-//        Log.i("mi", "Song : " + myDb.getSongById(4).getSong());
-        
-        showPlaylistByTagId(1);
-        
-        showTagsBySongId(10);
-        
+        boolean test = false;
+        if (test) {
+	        addSongs();
+	        DBStorage.readSongs();
+	        Log.w("2", "#Delete song 11 from the table");
+	        deleteSongById(11);
+	
+	        DBStorage.readSongs();
+	
+	        DBStorage.getDatabase().TagSong(10, "home");
+	        DBStorage.getDatabase().TagSong(10, "guitar");
+	        DBStorage.getDatabase().TagSong(2, "night drive");
+	        DBStorage.getDatabase().TagSong(2, "home");
+	        DBStorage.getDatabase().TagSong(3, "rock");
+	        
+	        readTags();
+	        readTaggedSongs();
+	        
+	//        Log.i("mi", "Song : " + myDb.getSongById(3).getSong());
+	//        Log.i("mi", "Song : " + myDb.getSongById(4).getSong());
+	        
+	        showPlaylistByTagId(1);
+	        
+	        showTagsBySongId(10);
+        }
         //deleteDB();
     }
 
@@ -124,17 +126,17 @@ public class StartActivity extends Activity {
     
     private void addSongs() {
     	ALog.i(TAG, "# Add songs");
-    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music", "laura.mp3", "Acapello", "Laura Boji", "Memories 2003"));
-    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music", "laura3.mp3", "Laluby", "Laura Boji", "Memories 2003"));
-    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music", "laura11.mp3", "I'm in love", "Laura Boji", "Memories 2003"));
-    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music", "laura14.mp3", "Waterfall", "Laura Boji", "Memories 2003"));
-    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music", "laura07.mp3", "Adventure", "Laura Boji", "Greatest Hits"));
-    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music\\New", "bon jovi.mp3", "It's my life", "John Bonjovi", "2000"));
-    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music\\New", "tnmk - voda.mp3", "Вода", "Т.Н.М.К.", "Вода 2004"));
-    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music\\New", "woc.mp3", "Wind of changes", "Scorpions", null));
-    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music\\New", "tropicana.mp3", "Club tropicna", "George Michael", "Memories 2003"));
-    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music\\New", "behind_blue_eyes.mp3", "Behind blue eyes", "Limp bizkit", ""));
-    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music\\New", "shapeofmyheart.mp3", "Shape of my heart", "Sting", ""));
+    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music", "laura.mp3", "Acapello", "02:04", "Laura Boji", "Memories 2003"));
+    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music", "laura3.mp3", "Laluby", "03:08", "Laura Boji", "Memories 2003"));
+    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music", "laura11.mp3", "I'm in love", "01:02", "Laura Boji", "Memories 2003"));
+    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music", "laura14.mp3", "Waterfall", "04:16", "Laura Boji", "Memories 2003"));
+    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music", "laura07.mp3", "Adventure", "00:31", "Laura Boji", "Greatest Hits"));
+    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music\\New", "bon jovi.mp3", "It's my life", "02:14", "John Bonjovi", "2000"));
+    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music\\New", "tnmk - voda.mp3", "Вода", "02:24", "Т.Н.М.К.", "Вода 2004"));
+    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music\\New", "woc.mp3", "Wind of changes", "02:34", "Scorpions", null));
+    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music\\New", "tropicana.mp3", "Club tropicna", "02:44", "George Michael", "Memories 2003"));
+    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music\\New", "behind_blue_eyes.mp3", "Behind blue eyes", "02:54", "Limp bizkit", ""));
+    	DBStorage.getDatabase().addSong(new SongFile("D:\\Music\\New", "shapeofmyheart.mp3", "Shape of my heart", "03:04", "Sting", ""));
     }
    
 //    private void readSongs() {
